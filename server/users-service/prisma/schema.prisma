@@ -11,9 +11,8 @@ model User {
   id          String   @id @default(cuid())
   username    String   @unique @db.VarChar(24)
   email       String   @unique @db.VarChar(24)
-  password    String
-  href        String   @unique
-  image       String?   
+  password    String   @db.VarChar(36)
+  image       String?  
   role        Role     @default(user)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
