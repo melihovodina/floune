@@ -15,7 +15,7 @@ async function bootstrap() {
   )
 
   const config = new DocumentBuilder()
-    .setTitle('users microservice docs')
+    .setTitle('authentication microservice docs')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
@@ -23,5 +23,5 @@ async function bootstrap() {
   
   await app.listen(PORT, () => console.log(`listening ${PORT} port...`));
 }
-
+  
 bootstrap();

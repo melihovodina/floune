@@ -11,7 +11,6 @@ export class CreateUserDto implements Prisma.UserCreateInput {
   @ApiProperty({example: 'email@gmail.com', description: 'user email'})
   @IsString({message: 'email should be a string'})
   @IsEmail({}, {message: "email should be valid"})
-  @Length(0, 36, {message: "email must be shorter than 36 characters"})
   email: string;
 
   @ApiProperty({example: 'strongPassword123', description: 'user password'})
