@@ -4,7 +4,7 @@ services:
     image: postgres:latest
     environment:
       POSTGRES_USER: users_admin
-      POSTGRES_PASSWORD: ${USER_DB_ADMIN_PASSWORD}
+      POSTGRES_PASSWORD: ${USERS_DB_ADMIN_PASSWORD}
       POSTGRES_DB: users
     volumes:
       - users_db_data:/var/lib/postgresql/data

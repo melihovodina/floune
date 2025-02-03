@@ -1,11 +1,17 @@
 import { Module } from '@nestjs/common';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt'
+import { sign } from 'crypto';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: ".env",
+    }),
+    JwtModule.register({
+      secret:process.env.JWT_SECRET,
+      signOptions: {expiresIn: '60s'}
     }),
     AuthModule
   ],
