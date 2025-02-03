@@ -1,5 +1,17 @@
 version: '3.8'
 services:
+  users_microservice:
+    build:
+      context: ./users-service
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    depends_on:
+      - users_db
+    environment:
+      DATABASE_URL: ${USERS_DB_URL}
+      PORT: ${USERS_PORT}
+
   users_db:
     image: postgres:latest
     environment:
@@ -11,6 +23,19 @@ services:
       - ./users-service/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5432:5432"
+
+  auth_microservice:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3002"
+    depends_on:
+      - auth_db
+    environment:
+      DATABASE_URL: ${AUTH_DB_URL}
+      PORT: ${AUTH_PORT}
+  
   auth_db:
     image: postgres:latest
     environment:
