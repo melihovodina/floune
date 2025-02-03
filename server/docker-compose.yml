@@ -1,6 +1,7 @@
 version: '3.8'
 services:
   users_microservice:
+    container_name: users_microservice
     build:
       context: ./users-service
       dockerfile: Dockerfile
@@ -14,6 +15,7 @@ services:
 
   users_db:
     image: postgres:latest
+    container_name: users_db
     environment:
       POSTGRES_USER: users_admin
       POSTGRES_PASSWORD: ${USERS_DB_ADMIN_PASSWORD}
@@ -23,8 +25,9 @@ services:
       - ./users-service/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5432:5432"
-
+ 
   auth_microservice:
+    container_name: auth_microservice
     build:
       context: ./auth-service
       dockerfile: Dockerfile
@@ -38,6 +41,7 @@ services:
   
   auth_db:
     image: postgres:latest
+    container_name: auth_db
     environment:
       POSTGRES_USER: auth_admin
       POSTGRES_PASSWORD: ${AUTH_DB_ADMIN_PASSWORD}
