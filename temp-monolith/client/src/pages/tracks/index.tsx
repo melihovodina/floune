@@ -1,18 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import MainLayout from "../../layouts/MainLayout";
-import {Box, Button, Card, Grid} from "@mui/material";
+import {Box, Button, Card, Grid, TextField} from "@mui/material";
 import {useRouter} from "next/router";
-import {ITrack} from "../../types/track";
 import TrackList from "../../components/TrackList";
-import Player from "../../components/Player";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
-import {useActions} from "../../hooks/useActions";
 import {NextThunkDispatch, wrapper} from "../../store";
 import {fetchTracks} from "../../store/actions-creators/track";
+import { GetServerSideProps } from 'next';
 
 const Index = () => {
     const router = useRouter()
     const {tracks, error} = useTypedSelector(state => state.track)
+    const [query, setQuery] = useState<string>('')
+
+    const <search></search>
 
     if (error) {
         return <MainLayout>
@@ -32,6 +33,11 @@ const Index = () => {
                             </Button>
                         </Grid>
                     </Box>
+                    <TextField
+                        fullWidth
+                        value={query}
+                        onChange={search}
+                    />
                     <TrackList tracks={tracks}/>
                 </Card>
             </Grid>
@@ -40,3 +46,13 @@ const Index = () => {
 };
 
 export default Index;
+
+export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(
+    (store) => async () => {
+        const dispatch = store.dispatch as NextThunkDispatch
+        await dispatch(await fetchTracks())
+      return {
+        props: {}, // will be passed to the page component as props
+      };
+    }
+  );
