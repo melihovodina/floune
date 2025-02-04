@@ -5,15 +5,28 @@ import {useRouter} from "next/router";
 import TrackList from "../../components/TrackList";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {NextThunkDispatch, wrapper} from "../../store";
-import {fetchTracks} from "../../store/actions-creators/track";
+import {fetchTracks, searchTracks} from "../../store/actions-creators/track";
 import { GetServerSideProps } from 'next';
+import { useDispatch } from 'react-redux';
 
 const Index = () => {
     const router = useRouter()
     const {tracks, error} = useTypedSelector(state => state.track)
     const [query, setQuery] = useState<string>('')
+    const dispatch = useDispatch() as NextThunkDispatch
+    const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
 
-    const <search></search>
+    const search = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        setQuery(e.target.value)
+        if(timer) {
+            clearTimeout(timer)
+        }
+        setTimer(
+            setTimeout(async () => {
+                await dispatch(await searchTracks(e.target.value))
+            }, 500)
+        )
+    }
 
     if (error) {
         return <MainLayout>
