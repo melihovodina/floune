@@ -12,7 +12,7 @@ services:
     environment:
       DATABASE_URL: ${USERS_DB_URL}
       PORT: ${USERS_PORT}
-
+  
   users_db:
     image: postgres:latest
     container_name: users_db
@@ -25,7 +25,7 @@ services:
       - ./users-service/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5432:5432"
- 
+
   auth_microservice:
     container_name: auth_microservice
     build:
@@ -38,7 +38,7 @@ services:
     environment:
       DATABASE_URL: ${AUTH_DB_URL}
       PORT: ${AUTH_PORT}
-  
+
   auth_db:
     image: postgres:latest
     container_name: auth_db

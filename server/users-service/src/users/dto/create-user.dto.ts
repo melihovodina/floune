@@ -15,14 +15,7 @@ export class CreateUserDto implements Prisma.UserCreateInput {
 
   @ApiProperty({example: 'strongPassword123', description: 'user password'})
   @IsString({message: 'password should be a string'})
-  @Length(8, 36, {message: "password should be above 8 and 36 chars"})
-  @IsStrongPassword({
-    minLength: 8,
-    minUppercase: 1,
-    minNumbers: 1,
-  }, {
-    message: 'password is too weak. It should include at least 8 characters, 1 uppercase letter and 1 number',
-  })
+  @Length(0, 36, {message: "password should be above 8 and 36 chars"})
   password: string;
 
   @ApiProperty({example: 'admin', description: 'user role', required: false})

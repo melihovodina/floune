@@ -9,10 +9,10 @@ datasource db {
 }
 
 model User {  
-  id          String   @id @default(cuid())
+  id          Int      @id @default(autoincrement())
   username    String   @unique @db.VarChar(24)
   email       String   @unique @db.VarChar(36)
-  password    String   @db.VarChar(36)
+  password    String   @db.VarChar(64)
   image       String?  
   role        Role     @default(user)
   createdAt   DateTime @default(now())

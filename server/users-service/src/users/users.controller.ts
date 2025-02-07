@@ -30,7 +30,7 @@ export class UsersController {
   @Get(':id')
   async findById(@Param('id') id: string) {
     try {
-      const user = await this.usersService.findById(id);
+      const user = await this.usersService.findById(+id);
       return user
     } catch (error) {
       throw error
@@ -40,7 +40,7 @@ export class UsersController {
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     try {
-      const user = await this.usersService.update(id, updateUserDto);
+      const user = await this.usersService.update(+id, updateUserDto);
       return user;
     } catch (error) { 
       throw error
@@ -50,7 +50,7 @@ export class UsersController {
   @Delete(':id')
   async remove(@Param('id') id: string) {
     try {
-      const user = await this.usersService.remove(id);
+      const user = await this.usersService.remove(+id);
       return user
     } catch (error) {
       throw error
