@@ -1,15 +1,30 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from './prisma.service';
 import * as bcrypt from 'bcryptjs'
+import { IsEmail } from 'class-validator';
 
 @Injectable()
 export class UsersService {
   constructor(private prismaService:PrismaService) {}
 
   async create(createUserDto: CreateUserDto) {
+    const [existingEmail, existingUsername] = await Promise.all([
+      this.prismaService.user.findUnique({ where: { email: createUserDto.email } }),
+      this.prismaService.user.findUnique({ where: { username: createUserDto.username } }),
+    ]);
+  
+    if (existingEmail) {
+      throw new BadRequestException('Email already in use');
+    }
+  
+    if (existingUsername) {
+      throw new BadRequestException('Username already in use');
+    }
+
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
+
     const user = await this.prismaService.user.create({
       data: {
         ...createUserDto,

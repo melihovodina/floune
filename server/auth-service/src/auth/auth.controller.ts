@@ -8,7 +8,11 @@ export class AuthController {
 
   @Post('signup')
   async signUp(@Body() signUpDto: SignUpDto) {
-    const user = await this.authService.signUp(signUpDto)
-    return user
+    try {
+      const response = await this.authService.signUp(signUpDto)
+      return response
+    } catch (error) {
+      throw error
+    }
   }
 }
