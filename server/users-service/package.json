@@ -30,6 +30,7 @@
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/swagger": "^11.0.2",
     "@prisma/client": "^6.2.1",
+    "auth-guard": "file:../libs/auth-guard/dist",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.5.1",
