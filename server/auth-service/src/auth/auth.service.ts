@@ -14,7 +14,7 @@ export class AuthService {
   ) {}
 
   async signUp(signUpDto: SignUpDto) {
-    const user = await axios.post('http://localhost:3001', signUpDto).catch((error) => {
+    const user = await axios.post('http://users_microservice:3001', signUpDto).catch((error) => {
       if (error.response) {
         throw new HttpException(error.response.data, error.response.status);
       }
@@ -25,7 +25,7 @@ export class AuthService {
   }
 
   async login(signInDto: SignInDto) {
-    const user = await axios.get('http://localhost:3001', {
+    const user = await axios.get('http://users_microservice:3001', {
       params: { name: signInDto.username }
     }).catch((error) => {
       if (error.response) {

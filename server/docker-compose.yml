@@ -1,5 +1,19 @@
 version: '3.8'
+
 services:
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - users_microservice
+      - auth_microservice
+    networks:
+      - my_network
+
   users_microservice:
     container_name: users_microservice
     build:
@@ -12,7 +26,9 @@ services:
     environment:
       DATABASE_URL: ${USERS_DB_URL}
       PORT: ${USERS_PORT}
-  
+    networks:
+      - my_network
+
   users_db:
     image: postgres:latest
     container_name: users_db
@@ -25,6 +41,8 @@ services:
       - ./users-service/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5432:5432"
+    networks:
+      - my_network
 
   auth_microservice:
     container_name: auth_microservice
@@ -38,6 +56,10 @@ services:
     environment:
       DATABASE_URL: ${AUTH_DB_URL}
       PORT: ${AUTH_PORT}
+      JWT_ACCESS_SECRET: ${AUTH_JWT_ACCESS_SECRET}
+      JWT_REFRESH_SECRET: ${AUTH_JWT_REFRESH_SECRET}
+    networks:
+      - my_network
 
   auth_db:
     image: postgres:latest
@@ -51,6 +73,12 @@ services:
       - ./auth-service/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5433:5432"
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
 
 volumes:
   users_db_data:

@@ -14,6 +14,8 @@ async function bootstrap() {
     })
   )
 
+  app.enableCors();
+
   const config = new DocumentBuilder()
     .setTitle('authentication microservice docs')
     .build();
